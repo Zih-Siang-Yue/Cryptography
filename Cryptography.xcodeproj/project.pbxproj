@@ -13,6 +13,11 @@
 		F04F50A522C21F7D00067BB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F04F50A422C21F7D00067BB4 /* Assets.xcassets */; };
 		F04F50A822C21F7D00067BB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F04F50A622C21F7D00067BB4 /* LaunchScreen.storyboard */; };
 		F04F50AB22C21F7D00067BB4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F04F50AA22C21F7D00067BB4 /* main.m */; };
+		F04F50B422C2236200067BB4 /* SYAsymmetricCryptographer.m in Sources */ = {isa = PBXBuildFile; fileRef = F04F50B322C2236200067BB4 /* SYAsymmetricCryptographer.m */; };
+		F04F50C022C2239C00067BB4 /* NSData+MBBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = F04F50B722C2239C00067BB4 /* NSData+MBBase64.m */; };
+		F04F50C122C2239C00067BB4 /* NSData+AESAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F04F50B822C2239C00067BB4 /* NSData+AESAdditions.m */; };
+		F04F50C222C2239C00067BB4 /* SYKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F04F50BC22C2239C00067BB4 /* SYKeychainManager.m */; };
+		F04F50C322C2239C00067BB4 /* SYRepositoryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F04F50BE22C2239C00067BB4 /* SYRepositoryManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +31,16 @@
 		F04F50A722C21F7D00067BB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F04F50A922C21F7D00067BB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F04F50AA22C21F7D00067BB4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F04F50B222C2236200067BB4 /* SYAsymmetricCryptographer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYAsymmetricCryptographer.h; sourceTree = "<group>"; };
+		F04F50B322C2236200067BB4 /* SYAsymmetricCryptographer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYAsymmetricCryptographer.m; sourceTree = "<group>"; };
+		F04F50B622C2239C00067BB4 /* NSData+AESAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AESAdditions.h"; sourceTree = "<group>"; };
+		F04F50B722C2239C00067BB4 /* NSData+MBBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MBBase64.m"; sourceTree = "<group>"; };
+		F04F50B822C2239C00067BB4 /* NSData+AESAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AESAdditions.m"; sourceTree = "<group>"; };
+		F04F50B922C2239C00067BB4 /* NSData+MBBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MBBase64.h"; sourceTree = "<group>"; };
+		F04F50BC22C2239C00067BB4 /* SYKeychainManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYKeychainManager.m; sourceTree = "<group>"; };
+		F04F50BD22C2239C00067BB4 /* SYKeychainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYKeychainManager.h; sourceTree = "<group>"; };
+		F04F50BE22C2239C00067BB4 /* SYRepositoryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYRepositoryManager.m; sourceTree = "<group>"; };
+		F04F50BF22C2239C00067BB4 /* SYRepositoryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYRepositoryManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +73,9 @@
 		F04F509A22C21F7C00067BB4 /* Cryptography */ = {
 			isa = PBXGroup;
 			children = (
+				F04F50B522C2239C00067BB4 /* Category */,
+				F04F50BA22C2239C00067BB4 /* RepositoryManager */,
+				F04F50B122C2236200067BB4 /* AsymmertricCryptographer */,
 				F04F509B22C21F7C00067BB4 /* AppDelegate.h */,
 				F04F509C22C21F7C00067BB4 /* AppDelegate.m */,
 				F04F509E22C21F7C00067BB4 /* ViewController.h */,
@@ -69,6 +87,45 @@
 				F04F50AA22C21F7D00067BB4 /* main.m */,
 			);
 			path = Cryptography;
+			sourceTree = "<group>";
+		};
+		F04F50B122C2236200067BB4 /* AsymmertricCryptographer */ = {
+			isa = PBXGroup;
+			children = (
+				F04F50B222C2236200067BB4 /* SYAsymmetricCryptographer.h */,
+				F04F50B322C2236200067BB4 /* SYAsymmetricCryptographer.m */,
+			);
+			path = AsymmertricCryptographer;
+			sourceTree = "<group>";
+		};
+		F04F50B522C2239C00067BB4 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				F04F50B622C2239C00067BB4 /* NSData+AESAdditions.h */,
+				F04F50B822C2239C00067BB4 /* NSData+AESAdditions.m */,
+				F04F50B922C2239C00067BB4 /* NSData+MBBase64.h */,
+				F04F50B722C2239C00067BB4 /* NSData+MBBase64.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		F04F50BA22C2239C00067BB4 /* RepositoryManager */ = {
+			isa = PBXGroup;
+			children = (
+				F04F50BB22C2239C00067BB4 /* KeychainManager */,
+				F04F50BF22C2239C00067BB4 /* SYRepositoryManager.h */,
+				F04F50BE22C2239C00067BB4 /* SYRepositoryManager.m */,
+			);
+			path = RepositoryManager;
+			sourceTree = "<group>";
+		};
+		F04F50BB22C2239C00067BB4 /* KeychainManager */ = {
+			isa = PBXGroup;
+			children = (
+				F04F50BC22C2239C00067BB4 /* SYKeychainManager.m */,
+				F04F50BD22C2239C00067BB4 /* SYKeychainManager.h */,
+			);
+			path = KeychainManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,8 +199,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F04F50A022C21F7C00067BB4 /* ViewController.m in Sources */,
+				F04F50B422C2236200067BB4 /* SYAsymmetricCryptographer.m in Sources */,
+				F04F50C122C2239C00067BB4 /* NSData+AESAdditions.m in Sources */,
 				F04F50AB22C21F7D00067BB4 /* main.m in Sources */,
+				F04F50C022C2239C00067BB4 /* NSData+MBBase64.m in Sources */,
+				F04F50C222C2239C00067BB4 /* SYKeychainManager.m in Sources */,
 				F04F509D22C21F7C00067BB4 /* AppDelegate.m in Sources */,
+				F04F50C322C2239C00067BB4 /* SYRepositoryManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
