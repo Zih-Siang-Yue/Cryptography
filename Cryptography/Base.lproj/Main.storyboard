@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -9,13 +13,127 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="msg" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X8y-Nr-0l0">
+                                <rect key="frame" x="20" y="221.5" width="335" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clear Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4JG-DM-8fL">
+                                <rect key="frame" x="20" y="190.5" width="335" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cipher Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DZc-IU-cgu">
+                                <rect key="frame" x="20" y="311.5" width="335" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="msg" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g4h-K2-qVb">
+                                <rect key="frame" x="20" y="342.5" width="335" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jHa-D5-XZf">
+                                <rect key="frame" x="20" y="261.5" width="111.5" height="32"/>
+                                <color key="backgroundColor" red="0.60998285649999995" green="0.88197969539999999" blue="0.66588980289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Cypher">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Asymmetric Encryption" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2Z-LW-zzi">
+                                <rect key="frame" x="67" y="35" width="241" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cLe-bC-87R">
+                                <rect key="frame" x="243.5" y="261.5" width="111.5" height="32"/>
+                                <color key="backgroundColor" red="0.90726073379003092" green="0.70787213495741108" blue="0.98829740290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Sign">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y8G-uy-Rf6">
+                                <rect key="frame" x="20" y="382.5" width="111.5" height="32"/>
+                                <color key="backgroundColor" red="0.090041615068912506" green="0.66253387928009033" blue="0.34545290470123291" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Decypher">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W3f-pO-A0S">
+                                <rect key="frame" x="243.5" y="382.5" width="111.5" height="32"/>
+                                <color key="backgroundColor" red="0.64544017391974029" green="0.50867653837301896" blue="0.71494405069932121" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Verify">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jk2-Yw-pEU">
+                                <rect key="frame" x="117.5" y="116.5" width="140" height="34"/>
+                                <color key="backgroundColor" red="0.35441163129999997" green="0.60651675039999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="g23-QC-PcG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Generate Key">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="X8y-Nr-0l0" firstAttribute="leading" secondItem="4JG-DM-8fL" secondAttribute="leading" id="1l1-IC-fLz"/>
+                            <constraint firstItem="X8y-Nr-0l0" firstAttribute="top" secondItem="4JG-DM-8fL" secondAttribute="bottom" constant="10" id="2hQ-JZ-Mur"/>
+                            <constraint firstItem="DZc-IU-cgu" firstAttribute="trailing" secondItem="X8y-Nr-0l0" secondAttribute="trailing" id="65Z-L2-msA"/>
+                            <constraint firstItem="jHa-D5-XZf" firstAttribute="width" secondItem="X8y-Nr-0l0" secondAttribute="width" multiplier="1:3" id="8k9-m0-YBt"/>
+                            <constraint firstItem="Y8G-uy-Rf6" firstAttribute="top" secondItem="g4h-K2-qVb" secondAttribute="bottom" constant="10" id="97l-0r-qmH"/>
+                            <constraint firstItem="Y8G-uy-Rf6" firstAttribute="leading" secondItem="g4h-K2-qVb" secondAttribute="leading" id="9jn-1N-V4e"/>
+                            <constraint firstItem="g4h-K2-qVb" firstAttribute="trailing" secondItem="X8y-Nr-0l0" secondAttribute="trailing" id="BcZ-bm-JMq"/>
+                            <constraint firstItem="X8y-Nr-0l0" firstAttribute="trailing" secondItem="4JG-DM-8fL" secondAttribute="trailing" id="CKb-eU-UEb"/>
+                            <constraint firstItem="DZc-IU-cgu" firstAttribute="top" secondItem="X8y-Nr-0l0" secondAttribute="bottom" constant="60" id="Coc-BQ-7z1"/>
+                            <constraint firstItem="W3f-pO-A0S" firstAttribute="trailing" secondItem="g4h-K2-qVb" secondAttribute="trailing" id="Fv6-Nu-Z6y"/>
+                            <constraint firstItem="Y8G-uy-Rf6" firstAttribute="width" secondItem="g4h-K2-qVb" secondAttribute="width" multiplier="1:3" id="GfL-wC-S0Z"/>
+                            <constraint firstItem="g4h-K2-qVb" firstAttribute="top" secondItem="DZc-IU-cgu" secondAttribute="bottom" constant="10" id="HPT-ob-iad"/>
+                            <constraint firstItem="jHa-D5-XZf" firstAttribute="leading" secondItem="X8y-Nr-0l0" secondAttribute="leading" id="JPk-sa-dEy"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="X8y-Nr-0l0" secondAttribute="trailing" constant="20" id="LMz-Df-xwg"/>
+                            <constraint firstItem="cLe-bC-87R" firstAttribute="centerY" secondItem="jHa-D5-XZf" secondAttribute="centerY" id="Lnw-KI-UyM"/>
+                            <constraint firstItem="cLe-bC-87R" firstAttribute="width" secondItem="X8y-Nr-0l0" secondAttribute="width" multiplier="1:3" id="Mbb-9Q-Ay3"/>
+                            <constraint firstItem="jk2-Yw-pEU" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.4" id="R5Z-Vh-2Oi"/>
+                            <constraint firstItem="DZc-IU-cgu" firstAttribute="leading" secondItem="X8y-Nr-0l0" secondAttribute="leading" id="Tps-eO-YEA"/>
+                            <constraint firstItem="jHa-D5-XZf" firstAttribute="top" secondItem="X8y-Nr-0l0" secondAttribute="bottom" constant="10" id="WEq-qI-TaH"/>
+                            <constraint firstItem="W3f-pO-A0S" firstAttribute="width" secondItem="g4h-K2-qVb" secondAttribute="width" multiplier="1:3" id="a8c-Rm-GoP"/>
+                            <constraint firstItem="X8y-Nr-0l0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="bn6-SB-5dI"/>
+                            <constraint firstItem="4JG-DM-8fL" firstAttribute="top" secondItem="jk2-Yw-pEU" secondAttribute="bottom" constant="40" id="faP-Uz-0jF"/>
+                            <constraint firstItem="W2Z-LW-zzi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hTH-et-Pqv"/>
+                            <constraint firstItem="W2Z-LW-zzi" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="hVh-qC-hrV"/>
+                            <constraint firstItem="cLe-bC-87R" firstAttribute="trailing" secondItem="X8y-Nr-0l0" secondAttribute="trailing" id="kLE-Hd-e2u"/>
+                            <constraint firstItem="g4h-K2-qVb" firstAttribute="leading" secondItem="X8y-Nr-0l0" secondAttribute="leading" id="u7o-1s-5AV"/>
+                            <constraint firstItem="W3f-pO-A0S" firstAttribute="top" secondItem="g4h-K2-qVb" secondAttribute="bottom" constant="10" id="wDz-e5-Tz3"/>
+                            <constraint firstItem="jk2-Yw-pEU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xbE-sX-THk"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="cipheredTextField" destination="g4h-K2-qVb" id="syU-tl-CHa"/>
+                        <outlet property="clearTextField" destination="X8y-Nr-0l0" id="CTI-bJ-dw2"/>
+                        <outlet property="cypherBtn" destination="jHa-D5-XZf" id="eVw-59-CWM"/>
+                        <outlet property="decypherBtn" destination="Y8G-uy-Rf6" id="QvA-UH-zwr"/>
+                        <outlet property="keyBtn" destination="jk2-Yw-pEU" id="pMX-Kv-szr"/>
+                        <outlet property="signBtn" destination="cLe-bC-87R" id="H4T-21-ZQ6"/>
+                        <outlet property="verifyBtn" destination="W3f-pO-A0S" id="wa0-Rm-tNI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

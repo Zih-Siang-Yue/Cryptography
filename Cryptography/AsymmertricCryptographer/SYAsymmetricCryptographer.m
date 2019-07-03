@@ -9,6 +9,9 @@
 #import "SYAsymmetricCryptographer.h"
 #import <CommonCrypto/CommonCryptor.h>
 
+#define Temp_Key_Type kSecAttrKeyTypeEC
+#define Temp_Key_Tag @"com.eccKeyForCrypto"
+
 @interface SYAsymmetricCryptographer()
 
 @property (assign, nonatomic) CFStringRef keyType;
@@ -18,6 +21,14 @@
 @end
 
 @implementation SYAsymmetricCryptographer
+
+#pragma mark - getter
+
+- (BOOL)isKeyPairExists {
+    return [self getKeyRef:kSecAttrKeyClassPublic] != nil;
+}
+
+#pragma mark - public
 
 /*
  ======== The samples to generate key pair as follows ========
@@ -33,8 +44,6 @@
  }
  
  */
-
-#pragma mark - public
 
 - (void)generateKeyPair:(CMKeyType)type keySize:(NSNumber *)size keyTag:(NSString *)tag {
     switch (type) {
@@ -55,6 +64,19 @@
     self.keyTag = tag;
     
     [self asymmertricGenerate];
+}
+
+- (void)deleteKeyPair:(void (^)(BOOL))completion {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSDictionary *params = @{(__bridge id)kSecClass: (__bridge id)kSecClassKey,
+                                 (__bridge id)kSecAttrApplicationTag: Temp_Key_Tag//self.keyTag
+                                 };
+        
+        OSStatus status = SecItemDelete((CFDictionaryRef)params);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(status == errSecSuccess);
+        });
+    });
 }
 
 #pragma mark - encrypt
@@ -78,17 +100,29 @@
             });
         }
         else {
-            NSMutableData *cipherData = [[NSMutableData alloc] initWithLength:SecKeyGetBlockSize(pubKey)];
-            size_t cipherDataLen = cipherData.length;
-            if (!cipherData) {
-                completion(false, nil, CMErrorOutOfMemory);
-            }
-            //kSecPaddingPKCS1, kSecPaddingPKCS1SHA256...
-            OSStatus status = SecKeyEncrypt(pubKey, kSecPaddingPKCS1, data.bytes, data.length, cipherData.mutableBytes, &cipherDataLen);
+//            NSMutableData *cipherData = [[NSMutableData alloc] initWithLength:SecKeyGetBlockSize(pubKey)];
+//            if (!cipherData) {
+//                completion(false, nil, CMErrorOutOfMemory);
+//                return;
+//            }
+//            unsigned char *cipherText = cipherData.mutableBytes;
+//            size_t cipherDataLen = cipherData.length;
+
+            CFErrorRef err = nil;
+            NSData *cipherData = (NSData*)CFBridgingRelease(SecKeyCreateEncryptedData(pubKey, kSecKeyAlgorithmECIESEncryptionStandardX963SHA256AESGCM, (CFDataRef)data, &err));
             dispatch_async(dispatch_get_main_queue(), ^{
-                CMError err = status == errSecSuccess ? CMErrorSuccess : CMErrorUnableToEncrypt;
-                completion(status == errSecSuccess, cipherData, err);
-            });
+                CMError errCode = err == nil ? CMErrorSuccess : CMErrorUnableToEncrypt;
+                completion(err == nil, cipherData, errCode);
+            });            
+//            OSStatus status = SecKeyEncrypt(pubKey, kSecPaddingPKCS1, data.bytes, data.length, (uint8_t*)cipherData.mutableBytes, &cipherDataLen);
+//            NSLog(@"--> encrypting.....");
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                NSLog(@"--> encrypted.....");
+//                CMError err = status == errSecSuccess ? CMErrorSuccess : CMErrorUnableToEncrypt;
+//                completion(status == errSecSuccess, cipherData, err);
+//                free(cipherText);
+//            });
+//            return;
         }
     });
 }
@@ -96,7 +130,7 @@
 #pragma mark - decrypt
 
 - (void)decryptWithString:(NSString *)str completion:(CMCompletion)completion {
-    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [[NSData alloc] initWithBase64EncodedString:str options:0];
     if (data) {
         [self decryptWithData:data completion:completion];
     }
@@ -107,7 +141,42 @@
 
 - (void)decryptWithData:(NSData *)data completion:(CMCompletion)completion {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
+        SecKeyRef priKey = [self getKeyRef:kSecAttrKeyClassPrivate];
+        if (!priKey) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(false, nil, CMErrorKeyNotFound);
+            });
+        }
+        else {
+            CFErrorRef err = nil;
+            NSData *decypherData = (NSData *)CFBridgingRelease(SecKeyCreateDecryptedData(priKey, kSecKeyAlgorithmECIESEncryptionStandardX963SHA256AESGCM, (CFDataRef)data, &err));
+            dispatch_async(dispatch_get_main_queue(), ^{
+                CMError errCode = err == nil ? CMErrorSuccess : CMErrorUnableToDecrypt;
+                completion(err == nil, decypherData, errCode);
+            });
+//            NSMutableData *decipherData = [[NSMutableData alloc] initWithLength:1024];
+//            if (!decipherData) {
+//                completion(false, nil, CMErrorOutOfMemory);
+//                return;
+//            }
+//            unsigned char *decipherText = decipherData.mutableBytes;
+//            size_t decipherDataLen = decipherData.length;
+//
+//            OSStatus status = SecKeyDecrypt(priKey, kSecPaddingPKCS1, data.bytes, data.length, decipherText, &decipherDataLen);
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                if (status == errSecSuccess) {
+//                    decipherData.length = decipherDataLen;
+//                    NSString *str = [[NSString alloc] initWithData:decipherData encoding:NSUTF8StringEncoding];
+//                    //TODO: should be nsdata format
+//                    str != nil ? completion(true, str, CMErrorSuccess) : completion(false, nil, CMErrorUnableToDecrypt);
+//                }
+//                else {
+//                    completion(false, nil, CMErrorUnableToDecrypt);
+//                }
+//                free(decipherText);
+//            });
+//            return;
+        }
     });
 }
 
@@ -138,8 +207,8 @@
     //keyClass -> e.g: kSecAttrKeyClassPublic / kSecAttrKeyClassPrivate
     //keyType -> e.g: kSecAttrKeyTypeRSA / kSecAttrKeyTypeEC
     NSDictionary *params = @{(__bridge id)kSecClass: (__bridge id)kSecClassKey,
-                             (__bridge id)kSecAttrKeyType: (__bridge id)self.keyType,
-                             (__bridge id)kSecAttrApplicationTag: self.keyTag,
+                             (__bridge id)kSecAttrKeyType: (__bridge id)Temp_Key_Type, //self.keyType,
+                             (__bridge id)kSecAttrApplicationTag: Temp_Key_Tag, //self.keyTag,
                              (__bridge id)kSecAttrKeyClass: (__bridge id)keyClass,
                              (__bridge id)kSecReturnRef: @(YES)
                              };
