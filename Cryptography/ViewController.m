@@ -8,7 +8,9 @@
 
 #import "ViewController.h"
 #import "SYRepositoryManager.h"
-#import "SYAsymmetricCryptographer.h"
+#import "SYRSACryptographer.h"
+#import "SYECCryptographer.h"
+#import "UIAlertController+SY.h"
 
 #define Server_IP_Key @"SERVER_IP_KEY"
 
@@ -45,13 +47,14 @@
 }
 
 - (void)configBase {
-    self.crypto = [SYAsymmetricCryptographer new];
+    self.crypto = [SYECCryptographer new];
+//    self.crypto = [SYRSACryptographer new];
 }
 
 - (void)configBtn {
     NSString *title = self.crypto.isKeyPairExists ? @"Delete Key" : @"Generate Key";
     [self.keyBtn setTitle:title forState:UIControlStateNormal];
-    [self.keyBtn addTarget:self action:@selector(generateOrDeleteKey) forControlEvents:UIControlEventTouchUpInside];
+    [self.keyBtn addTarget:self action:@selector(keyAction) forControlEvents:UIControlEventTouchUpInside];
     [self.cypherBtn addTarget:self action:@selector(cypher) forControlEvents:UIControlEventTouchUpInside];
     [self.decypherBtn addTarget:self action:@selector(decypher) forControlEvents:UIControlEventTouchUpInside];
     [self.signBtn addTarget:self action:@selector(signature) forControlEvents:UIControlEventTouchUpInside];
@@ -60,24 +63,41 @@
 
 #pragma mark - btn action
 
-- (void)generateOrDeleteKey {
-    if (self.crypto.isKeyPairExists) {
-        __weak typeof (self) wSelf = self;
-        [self.crypto deleteKeyPair:^(BOOL isSuccess) {
-            if (isSuccess) {
-                [wSelf.keyBtn setTitle:@"Generate Key" forState:UIControlStateNormal];
-            }
-        }];
-    }
-    else {
-        [self.crypto generateKeyPair:CMKeyTypeEC keySize:@(256) keyTag:@"com.eccKeyForCrypto"];
-        [self.keyBtn setTitle:@"Delete Key" forState:UIControlStateNormal];
-    }
+- (void)keyAction {
+    self.crypto.isKeyPairExists ? [self deleteKeyPair] : [self generateKeyPair];
+}
+
+- (void)generateKeyPair {
+    __weak typeof (self) wSelf = self;
+    [self.crypto generateKeyPairWithKeySize:@(256) result:^(BOOL success) {
+        if (success) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [wSelf.keyBtn setTitle:@"Delete Key" forState:UIControlStateNormal];
+            });
+        }
+    }];
+    
+//    [self.crypto generateKeyPairWithKeySize:@(2048) result:^(BOOL success) {
+//        if (success) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [wSelf.keyBtn setTitle:@"Delete Key" forState:UIControlStateNormal];
+//            });
+//        }
+//    }];
+}
+
+- (void)deleteKeyPair {
+    __weak typeof (self) wSelf = self;
+    [self.crypto deleteKeyPair:^(BOOL isSuccess) {
+        if (isSuccess) {
+            [wSelf.keyBtn setTitle:@"Generate Key" forState:UIControlStateNormal];
+        }
+    }];
 }
 
 - (void)cypher {
-    if (!self.clearTextField.text) {
-        NSLog(@"Please enter something...");
+    if ([self.clearTextField.text isEqualToString:@""]) {
+        [UIAlertController showTitle:@"Empty" msg:@"Please enter the content...."];
         return;
     }
     
@@ -88,14 +108,15 @@
             self.clearTextField.text = @"";
         }
         else {
-            NSLog(@"encrypted failure, err code: %ld", (long)err);
+            NSString *msg = [NSString stringWithFormat:@"err code: %ld", (long)err];
+            [UIAlertController showTitle:@"Encrypted failure" msg:msg];
         }
     }];
 }
 
 - (void)decypher {
-    if (!self.cipheredTextField.text) {
-        NSLog(@"Please enter something...");
+    if ([self.cipheredTextField.text isEqualToString:@""]) {
+        [UIAlertController showTitle:@"Empty" msg:@"Please enter the content...."];
         return;
     }
     
@@ -106,17 +127,40 @@
             self.cipheredTextField.text = @"";
         }
         else {
-            NSLog(@"decrypted failure, err code: %ld", (long)err);
+            NSString *msg = [NSString stringWithFormat:@"err code: %ld", (long)err];
+            [UIAlertController showTitle:@"Decrypted failure" msg:msg];
         }
     }];
 }
 
 - (void)signature {
+    if ([self.clearTextField.text isEqualToString:@""]) {
+        [UIAlertController showTitle:@"Empty" msg:@"Please enter the content...."];
+        return;
+    }
     
+    [self.crypto signWithString:self.clearTextField.text completion:^(BOOL success, NSData * _Nullable data, CMError err) {
+        if (success) {
+            NSString *str = [data base64EncodedStringWithOptions:0];
+            self.cipheredTextField.text = str;
+        }
+        else {
+            NSString *msg = [NSString stringWithFormat:@"err code: %ld", (long)err];
+            [UIAlertController showTitle:@"Signature failure" msg:msg];
+        }
+    }];
 }
 
 - (void)verify {
-    
+    if ([self.cipheredTextField.text isEqualToString:@""] && [self.clearTextField.text isEqualToString:@""]) {
+        [UIAlertController showTitle:@"Empty" msg:@"Please enter the content...."];
+        return;
+    }
+
+    [self.crypto verifySign:self.cipheredTextField.text originStr:self.clearTextField.text completion:^(BOOL success, NSData * _Nullable data, CMError err) {
+        NSString *msg = success ? @"Success" : @"Fail";
+        [UIAlertController showTitle:@"Verify Signature" msg:msg];
+    }];
 }
 
 

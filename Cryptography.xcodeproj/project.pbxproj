@@ -18,6 +18,9 @@
 		F04F50C122C2239C00067BB4 /* NSData+AESAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F04F50B822C2239C00067BB4 /* NSData+AESAdditions.m */; };
 		F04F50C222C2239C00067BB4 /* SYKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F04F50BC22C2239C00067BB4 /* SYKeychainManager.m */; };
 		F04F50C322C2239C00067BB4 /* SYRepositoryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F04F50BE22C2239C00067BB4 /* SYRepositoryManager.m */; };
+		F0824F3A22CDAFED000C34EB /* UIAlertController+SY.m in Sources */ = {isa = PBXBuildFile; fileRef = F0824F3922CDAFED000C34EB /* UIAlertController+SY.m */; };
+		F0824F3E22CDF506000C34EB /* SYRSACryptographer.m in Sources */ = {isa = PBXBuildFile; fileRef = F0824F3D22CDF506000C34EB /* SYRSACryptographer.m */; };
+		F0824F4222CDF53A000C34EB /* SYECCryptographer.m in Sources */ = {isa = PBXBuildFile; fileRef = F0824F4122CDF53A000C34EB /* SYECCryptographer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +44,12 @@
 		F04F50BD22C2239C00067BB4 /* SYKeychainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYKeychainManager.h; sourceTree = "<group>"; };
 		F04F50BE22C2239C00067BB4 /* SYRepositoryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYRepositoryManager.m; sourceTree = "<group>"; };
 		F04F50BF22C2239C00067BB4 /* SYRepositoryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYRepositoryManager.h; sourceTree = "<group>"; };
+		F0824F3822CDAFED000C34EB /* UIAlertController+SY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+SY.h"; sourceTree = "<group>"; };
+		F0824F3922CDAFED000C34EB /* UIAlertController+SY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+SY.m"; sourceTree = "<group>"; };
+		F0824F3C22CDF506000C34EB /* SYRSACryptographer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYRSACryptographer.h; sourceTree = "<group>"; };
+		F0824F3D22CDF506000C34EB /* SYRSACryptographer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYRSACryptographer.m; sourceTree = "<group>"; };
+		F0824F4022CDF53A000C34EB /* SYECCryptographer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYECCryptographer.h; sourceTree = "<group>"; };
+		F0824F4122CDF53A000C34EB /* SYECCryptographer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYECCryptographer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +89,8 @@
 				F04F509C22C21F7C00067BB4 /* AppDelegate.m */,
 				F04F509E22C21F7C00067BB4 /* ViewController.h */,
 				F04F509F22C21F7C00067BB4 /* ViewController.m */,
+				F0824F3822CDAFED000C34EB /* UIAlertController+SY.h */,
+				F0824F3922CDAFED000C34EB /* UIAlertController+SY.m */,
 				F04F50A122C21F7C00067BB4 /* Main.storyboard */,
 				F04F50A422C21F7D00067BB4 /* Assets.xcassets */,
 				F04F50A622C21F7D00067BB4 /* LaunchScreen.storyboard */,
@@ -94,6 +105,8 @@
 			children = (
 				F04F50B222C2236200067BB4 /* SYAsymmetricCryptographer.h */,
 				F04F50B322C2236200067BB4 /* SYAsymmetricCryptographer.m */,
+				F0824F3F22CDF50E000C34EB /* SYRSACryptographer */,
+				F0824F4322CDF542000C34EB /* SYECCryptographer */,
 			);
 			path = AsymmertricCryptographer;
 			sourceTree = "<group>";
@@ -126,6 +139,24 @@
 				F04F50BD22C2239C00067BB4 /* SYKeychainManager.h */,
 			);
 			path = KeychainManager;
+			sourceTree = "<group>";
+		};
+		F0824F3F22CDF50E000C34EB /* SYRSACryptographer */ = {
+			isa = PBXGroup;
+			children = (
+				F0824F3C22CDF506000C34EB /* SYRSACryptographer.h */,
+				F0824F3D22CDF506000C34EB /* SYRSACryptographer.m */,
+			);
+			path = SYRSACryptographer;
+			sourceTree = "<group>";
+		};
+		F0824F4322CDF542000C34EB /* SYECCryptographer */ = {
+			isa = PBXGroup;
+			children = (
+				F0824F4022CDF53A000C34EB /* SYECCryptographer.h */,
+				F0824F4122CDF53A000C34EB /* SYECCryptographer.m */,
+			);
+			path = SYECCryptographer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,13 +230,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				F04F50A022C21F7C00067BB4 /* ViewController.m in Sources */,
+				F0824F3E22CDF506000C34EB /* SYRSACryptographer.m in Sources */,
 				F04F50B422C2236200067BB4 /* SYAsymmetricCryptographer.m in Sources */,
 				F04F50C122C2239C00067BB4 /* NSData+AESAdditions.m in Sources */,
 				F04F50AB22C21F7D00067BB4 /* main.m in Sources */,
 				F04F50C022C2239C00067BB4 /* NSData+MBBase64.m in Sources */,
 				F04F50C222C2239C00067BB4 /* SYKeychainManager.m in Sources */,
+				F0824F4222CDF53A000C34EB /* SYECCryptographer.m in Sources */,
 				F04F509D22C21F7C00067BB4 /* AppDelegate.m in Sources */,
 				F04F50C322C2239C00067BB4 /* SYRepositoryManager.m in Sources */,
+				F0824F3A22CDAFED000C34EB /* UIAlertController+SY.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,7 +15,9 @@ typedef NS_ENUM(NSInteger, CMError) {
     CMErrorOutOfMemory,
     CMErrorKeyNotFound,
     CMErrorUnableToEncrypt,
-    CMErrorUnableToDecrypt
+    CMErrorUnableToDecrypt,
+    CMErrorUnableToSignature,
+    CMErrorUnableToVerify
 };
 
 typedef NS_ENUM (NSInteger, CMKeyType) {
@@ -25,28 +27,34 @@ typedef NS_ENUM (NSInteger, CMKeyType) {
 };
 
 typedef void (^CMCompletion)(BOOL success, NSData * _Nullable data, CMError err);
-
+typedef void (^CMResult)(BOOL success);
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SYAsymmetricCryptographer : NSObject
 
+@property (copy, nonatomic) NSString *keyTag;
+@property (assign, nonatomic) CFStringRef keyType;
 @property (assign, nonatomic, readonly) BOOL isKeyPairExists;
-
 
 /**
  @abstract Generate public & private key
- @param type -> Key type
  @param size -> Key size
- @param tag -> A identifier to find the key later
+ @param result -> Delete successfully or not.
  */
-- (void)generateKeyPair:(CMKeyType)type keySize:(NSNumber *)size keyTag:(NSString *)tag;
+- (void)generateKeyPairWithKeySize:(NSNumber *)size result:(CMResult)result;
 
 /**
  @abstract Delete public * private key
- @param completion -> delete successfully or not
+ @param result -> Delete successfully or not.
  */
-- (void)deleteKeyPair:(void (^)(BOOL))completion;
+- (void)deleteKeyPair:(CMResult)result;
+
+/**
+ @abstract Get public / private key
+ @param keyClass -> kSecAttrKeyClassPublic / kSecAttrKeyClassPrivate ...
+ */
+- (__nullable SecKeyRef)getKeyRef:(CFStringRef)keyClass;
 
 //Encrypt
 - (void)encryptWithString:(NSString *)str completion:(CMCompletion)completion;
@@ -56,6 +64,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)decryptWithString:(NSString *)str completion:(CMCompletion)completion;
 - (void)decryptWithData:(NSData *)data completion:(CMCompletion)completion;
 
+//Signature
+- (void)signWithString:(NSString *)str completion:(CMCompletion)completion;
+- (void)signWithData:(NSData *)data completion:(CMCompletion)completion;
+
+//Verify
+- (void)verifySign:(NSString *)sign originStr:(NSString *)originStr completion:(CMCompletion)completion;
+- (void)verifySignData:(NSData *)signData originData:(NSData *)originData completion:(CMCompletion)completion;
 
 @end
 
